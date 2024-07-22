@@ -1,8 +1,8 @@
 .card-item {
     display: grid;
     justify-content: center;
-    width: 12rem;
-    height: 30rem;
+    width: 1rem;
+    height: 3rem;
     border: solid 1px #b3b3b3;
     margin: 1rem 1rem;
     padding: 1rem;
@@ -11,8 +11,8 @@
 }
 
 .img{
-    width:100;
-    height: 50;
+    width:10px;
+    height: 50px;
     border-radius: 1rem;
 }
 
