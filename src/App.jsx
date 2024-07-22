@@ -1,20 +1,46 @@
-import { useState } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar";
 import ItemListContainer from "./components/ItemListContainer";
-import SiteFooter from "./components/SiteFooter";
+import { useState } from "react";
+import { useEffect } from "react";
+import fetchData from "./fetchData";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import NotFound from "./components/NotFound";
+import Contactos from "./components/Contactos";
+import ItemDetail from "./components/ItemDetail";
+import HomeMain from "./components/HomeMain";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [productos, setProductos] = useState([]);
+
+  useEffect(() => {
+    fetchData()
+      .then((response) => {
+        setProductos(response);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     <>
-      <div>
+      <BrowserRouter>
         <NavBar />
-        <ItemListContainer mensaje="Items List Container 1" />
-        <ItemListContainer mensaje="Items List Container 2" />
-        <SiteFooter />
-      </div>
+        <Routes>
+          <Route path="/" element={<HomeMain />} />
+
+          <Route
+            path="/productos"
+            element={<ItemListContainer productos={productos} />}
+          />
+          <Route path="/contactos" element={<Contactos />} />
+          <Route
+            path="/detalle/:id"
+            element={<ItemDetail productos={productos} />}
+          />
+
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

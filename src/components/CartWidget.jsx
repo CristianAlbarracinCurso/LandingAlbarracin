@@ -1,4 +1,3 @@
-import React from "react";
 import logoCarrito from "../assets/logoCarrito2.png";
 const CartWidget = () => {
   return (
@@ -8,4 +7,4 @@ const CartWidget = () => {
   );
 };
 
-export default CartWidget;
+export default CartWidget;  
