@@ -9,6 +9,7 @@ import NotFound from "./components/NotFound";
 import Contactos from "./components/Contactos";
 import ItemDetail from "./components/ItemDetail";
 import HomeMain from "./components/HomeMain";
+import Cart from "./components/Cart";
 
 function App() {
   const [productos, setProductos] = useState([]);
@@ -32,7 +33,8 @@ function App() {
             path="/productos"
             element={<ItemListContainer productos={productos} />}
           />
-          <Route path="/contactos" element={<Contactos />} />
+          <Route path="/Contactos" element={<Contactos />} />
+          <Route path="/Cart" element={<Cart />} />
           <Route
             path="/detalle/:id"
             element={<ItemDetail productos={productos} />}

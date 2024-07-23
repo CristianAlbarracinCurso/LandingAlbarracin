@@ -1,0 +1,23 @@
+.carrito-container {
+    padding: 1rem;
+  }
+  
+  .carrito-lista {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .carrito-item {
+    border-bottom: 1px solid #5153e941;
+    padding: 0rem 0;
+  }
+  
+  .carrito-item h3 {
+    margin: 0;
+  }
+  
+  .carrito-item p {
+    margin: 0.5rem 0;
+  }
+  
+F

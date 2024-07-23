@@ -1,8 +1,8 @@
 const Home = () => {
   return (
     <div>
-      <h1>Bienvenido(a) a Tienda Informatica.</h1>
-      <p>Insumos y Servicios a su medida.</p>
+      <h1>Bienvenido a Info Store.</h1>
+      <p>Insumos y Servicios informaticos a su medida.</p>
     </div>
   );
 };

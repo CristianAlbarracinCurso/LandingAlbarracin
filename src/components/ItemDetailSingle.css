@@ -1,31 +1,28 @@
 .card-item {
-    justify-content: center;
-    width: 30rem;
-    height: 35rem;
-    border: solid 0px #b3b3b3;
-    border-radius: 0.5rem;
-    transition: 0.2s;
+  justify-content: center;
+  width: 30rem;
+  height: 35rem;
+  border: solid 0px #b3b3b3;
+  border-radius: 0.5rem;
+  transition: 0.2s;
 }
 .card-container {
- 
-    width: 100%;
-    align-items: center;
-    align-content: center;
-    text-align: center;
+  width: 100%;
+  align-items: center;
+  align-content: center;
+  text-align: center;
 }
 
-.img{
-    width: 20rem;
-    height: 20rem;
-    border-radius: 1rem;
-    ;
+.img {
+  width: 20rem;
+  height: 20rem;
+  border-radius: 1rem;
 }
 
-.card-item:hover{
-    cursor: pointer;
-    transform: scale(1.01);
-    transition: 0.1s;
-    background-color: #4ba0004d;
+.card-item:hover {
+  cursor: pointer;
+  transform: scale(1.01);
+  transition: 0.1s;
+  background-color: #4ba0004d;
 }
 
-/*Porner los stilos de detalle y carrito*/

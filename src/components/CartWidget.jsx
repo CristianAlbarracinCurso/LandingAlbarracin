@@ -1,10 +1,16 @@
+
 import logoCarrito from "../assets/logoCarrito2.png";
+
 const CartWidget = () => {
+ 
   return (
     <>
-      <img src={logoCarrito} alt="Logo" width="45px" />
+      <span className="badge badge-light">
+        <img src={logoCarrito} alt="Logo" width="45px" />
+ 
+      </span>
     </>
   );
 };
 
-export default CartWidget;  
+export default CartWidget;

@@ -1,16 +1,15 @@
 import { useState } from "react";
 import ItemList from "./ItemList";
+import Loader from "./Loader";
 
 const ItemListContainer = ({ productos }) => {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todas");
 
-  // Obtener las categorías sumando TOdas
   const categorias = [
     "Todas",
     ...new Set(productos.map((producto) => producto.categoria)),
   ];
 
-  // Filtrar
   const productosFiltrados =
     categoriaSeleccionada === "Todas"
       ? productos
@@ -25,7 +24,7 @@ const ItemListContainer = ({ productos }) => {
   return (
     <>
       {productos.length === 0 ? (
-        <p>Cargando...</p>
+        <Loader></Loader>
       ) : (
         <>
           <h4 style={{ padding: "2rem" }}>
@@ -33,8 +32,9 @@ const ItemListContainer = ({ productos }) => {
           </h4>
 
           <div>
-            <label htmlFor="categoria" style={{ padding: "2rem" }}><h5>
-              Seleccionar categoría: </h5> </label>
+            <label htmlFor="categoria" style={{ padding: "2rem" }}>
+              <h5>Seleccionar categoría: </h5>{" "}
+            </label>
             <select
               id="categoria"
               value={categoriaSeleccionada}

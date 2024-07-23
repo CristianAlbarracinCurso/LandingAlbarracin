@@ -1,5 +1,5 @@
-.item-list{
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+.item-list {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import ItemDetailSingle from "./ItemDetailSingle"
+import ItemDetailSingle from "./ItemDetailSingle";
 import { useEffect, useState } from "react";
 
 const ItemDetail = ({ productos }) => {
@@ -7,10 +7,9 @@ const ItemDetail = ({ productos }) => {
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
 
   useEffect(() => {
- 
     if (productos && id) {
       const findProduct = productos.find((el) => el.id === id);
-      
+
       setProductoSeleccionado(findProduct);
     }
   }, [id, productos]);
@@ -27,7 +26,6 @@ const ItemDetail = ({ productos }) => {
             categoria={productoSeleccionado.categoria}
             precio={productoSeleccionado.precio}
             descripcion={productoSeleccionado.descripcion}
-            
           />
         </>
       ) : (
