@@ -2,7 +2,10 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { addDoc, collection, getDocs, getFirestore } from "firebase/firestore";
 import { firebaseConfig } from "../Config/firebaseConfig";
-import swal from "sweetalert";
+import Swal from 'sweetalert2'
+
+
+
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -53,7 +56,7 @@ export const ContextProvider = (props) => {
     // Actualizar localStorage
     localStorage.setItem("carrito", JSON.stringify(carritoActualizado));
 
-    swal({
+    Swal.fire({
       title: "Producto agregado",
       text: `${producto.nombre} ha sido agregado al carrito`,
       icon: "success",
@@ -61,33 +64,71 @@ export const ContextProvider = (props) => {
     });
   }
 
-  function crearOrden() {
-    if (carrito.length > 0) {
-      const nuevaOrden = {
-        nombre: "Lucas Ruiz",
-        telefono: 231231231,
-        mail: "lucas@coder.com",
-        productos: carrito,
-      };
+  function crearOrden() 
+  {
 
-      addDoc(ordersCollection, nuevaOrden)
-        .then((response) => {
-          console.log("Orden creada correctamente con el id: " + response.id);
-          setCarrito([]);
-          localStorage.removeItem("carrito"); // Limpiar localStorage después de crear la orden
-        })
-        .catch((err) => {
-          alert("Algo falló, intente más tarde");
-          console.error(err);
-        });
-    } else {
-      swal({
-        title: "Error",
-        text: "Tu carrito está vacío!",
-        icon: "error",
+      Swal.fire({
+        title: 'Información de contacto',
+        html: `
+          <input type="text" id="nombre" class="swal2-input" placeholder="Nombre">
+          <input type="text" id="mail" class="swal2-input" placeholder="Email">
+          <input type="text" id="telefono" class="swal2-input" placeholder="Teléfono">
+        `,
+        confirmButtonText: 'Confirmar',
+        focusConfirm: false,
+        preConfirm: () => {
+          const nombre = Swal.getPopup().querySelector('#nombre').value;
+          const mail = Swal.getPopup().querySelector('#mail').value;
+          const telefono = Swal.getPopup().querySelector('#telefono').value;
+          if (!nombre || !mail || !telefono) {
+            Swal.showValidationMessage(`Todos los campos son requeridos`);
+            return false;
+          }
+          return { nombre, mail, telefono };
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const { nombre, mail, telefono } = result.value;
+          if (carrito.length > 0) {
+            const nuevaOrden = {
+              nombre,
+              telefono,
+              mail,
+              productos: carrito,
+            };
+    
+            addDoc(ordersCollection, nuevaOrden)
+              .then((response) => {
+                console.log("Orden creada correctamente con el id: " + response.id);
+                setCarrito([]);
+                Swal.fire({
+                  title: 'Compra realizada con éxito',
+                  text: `Gracias por tu compra, su codigo de orden es: ${response.id}`,
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+                });
+              })
+              .catch((err) => {
+                Swal.fire({
+                  title: 'Error',
+                  text: 'Algo falló, intente más tarde',
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+                });
+                console.error(err);
+              });
+          } else {
+            Swal.fire({
+              title: 'Error',
+              text: 'Tu carrito está vacío!',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }
+        }
       });
     }
-  }
+  
 
   return (
     <AppContext.Provider

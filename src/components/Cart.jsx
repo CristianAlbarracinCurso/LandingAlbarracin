@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import swal from "sweetalert";
 import "./Cart.css";
 import { useAppContext } from "./Context/Context";
 
@@ -22,23 +21,8 @@ const Cart = () => {
   const handleFinalizarCompra = () => {
     if (carrito.length > 0) {
       crearOrden();
-
-      swal({
-        title: "Compra realizada con éxito",
-        text: "Gracias por tu compra",
-        icon: "success",
-        button: "OK",
-      }).then(() => {
-        localStorage.removeItem("carrito");
-        setCarrito([]); // Limpiar el carrito en el contexto
-      });
-    } else {
-      swal({
-        title: "Carrito vacío",
-        text: "No hay productos en tu carrito",
-        icon: "error",
-        button: "OK",
-      });
+      localStorage.removeItem("carrito");
+      setCarrito([]); 
     }
   };
 
