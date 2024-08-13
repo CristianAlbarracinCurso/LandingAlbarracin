@@ -4,20 +4,15 @@ import React, { useEffect, useState } from "react";
 import { useAppContext } from './Context/Context';
 
 const CartWidget = () => {
-  const [carrito, setCarrito] = useState([]);
+  const { carrito } = useAppContext(); // Obtener el carrito desde el contexto
   const [itemCarrito, setItemCarrito] = useState(0);
-
-  useEffect(() => {
-    const carritoLocalStorage = JSON.parse(localStorage.getItem("carrito")) || [];
-    setCarrito(carritoLocalStorage);
-  }, []);
 
   useEffect(() => {
     const calcularCant = () => {
       return carrito.reduce((total, producto) => total + producto.cantidad, 0);
     };
     setItemCarrito(calcularCant());
-  }, [carrito]);
+  }, [carrito]); // Dependencia en carrito para actualizar cuando cambie
 
   return (
     <>

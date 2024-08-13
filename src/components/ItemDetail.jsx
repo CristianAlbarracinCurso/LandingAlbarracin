@@ -1,15 +1,16 @@
 import { useParams } from "react-router-dom";
 import ItemDetailSingle from "./ItemDetailSingle";
 import { useEffect, useState } from "react";
+import { useAppContext } from './Context/Context';
 
-const ItemDetail = ({ productos }) => {
+const ItemDetail = () => {
   const { id } = useParams();
+  const { productos } = useAppContext(); // Usar productos desde el contexto
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
 
   useEffect(() => {
     if (productos && id) {
       const findProduct = productos.find((el) => el.id === id);
-
       setProductoSeleccionado(findProduct);
     }
   }, [id, productos]);

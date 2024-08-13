@@ -1,10 +1,8 @@
-// Context/Context.js
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { addDoc, collection, getDocs, getFirestore } from "firebase/firestore";
-import { firebaseConfig } from "../Config/firebaseConfig"; 
+import { firebaseConfig } from "../Config/firebaseConfig";
 import swal from "sweetalert";
-
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -20,30 +18,47 @@ export const ContextProvider = (props) => {
   const [productos, setProductos] = useState([]);
   const [carrito, setCarrito] = useState([]);
 
+  // Cargar productos desde Firestore
+  useEffect(() => {
+    cargarData();
+  }, []);
+
+  // Cargar el carrito desde localStorage
+  useEffect(() => {
+    const carritoLocalStorage = JSON.parse(localStorage.getItem("carrito")) || [];
+    setCarrito(carritoLocalStorage);
+  }, []);
+
   function cargarData() {
     getDocs(productsCollection)
       .then((snapshot) => {
-        // let arrayProductos = snapshot.docs.map(el => el.data()).sort((a,b) => a.id - b.id); // Ordenados por id
         let arrayProductos = snapshot.docs.map((el) => el.data());
         setProductos(arrayProductos);
       })
       .catch((err) => console.error(err));
   }
 
-  function agregarAlCarrito(id) {
-    const carritoAuxiliar = [...carrito];
+  function agregarAlCarrito(producto, cantidad) {
+    const carritoActualizado = [...carrito];
+    const productoEnCarrito = carritoActualizado.find((p) => p.id === producto.id);
 
-    const productoAAgregar = productos.find((el) => el.id === id);
+    if (productoEnCarrito) {
+      productoEnCarrito.cantidad += cantidad;
+    } else {
+      carritoActualizado.push({ ...producto, cantidad });
+    }
 
-    // 1. Tenemos que validar si el producto ya existe.
-    // 2. Por ejemplo: some, comparo por id
+    setCarrito(carritoActualizado);
 
-    // carritoAuxiliar.some(el => el.id === id);
+    // Actualizar localStorage
+    localStorage.setItem("carrito", JSON.stringify(carritoActualizado));
 
-    // 3. Crear un nuevo objeto igual a productoAAgregar pero que además tenga la propiedad "CANTIDAD". Cuando el objeto no está en el array, le ponemos cantidad = 1. Cuando el objeto está en el array, le modificamos la cantidad sumándole 1.
-
-    carritoAuxiliar.push(productoAAgregar);
-    setCarrito(carritoAuxiliar);
+    swal({
+      title: "Producto agregado",
+      text: `${producto.nombre} ha sido agregado al carrito`,
+      icon: "success",
+      button: "OK",
+    });
   }
 
   function crearOrden() {
@@ -59,13 +74,14 @@ export const ContextProvider = (props) => {
         .then((response) => {
           console.log("Orden creada correctamente con el id: " + response.id);
           setCarrito([]);
+          localStorage.removeItem("carrito"); // Limpiar localStorage después de crear la orden
         })
         .catch((err) => {
           alert("Algo falló, intente más tarde");
           console.error(err);
         });
     } else {
-      swal.fire({
+      swal({
         title: "Error",
         text: "Tu carrito está vacío!",
         icon: "error",

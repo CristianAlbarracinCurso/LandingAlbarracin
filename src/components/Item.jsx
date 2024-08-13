@@ -4,30 +4,22 @@ import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import { useAppContext } from './Context/Context';
 
-const Item = ({ nombre, precio, id }) => {
+const Item = ({ nombre, precio, id, categoria }) => {
   const [cantidad, setCantidad] = useState(1);
+  const { agregarAlCarrito } = useAppContext(); // Usar la función agregarAlCarrito del contexto
 
   const url = `/img/${id}.png`;
 
   const cambioCantidad = (e) => {
-    setCantidad(e.target.value);
+    setCantidad(parseInt(e.target.value, 10)); // Asegurar que la cantidad sea un número entero
   };
 
-  const agregarAlCarrito = () => {
-    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    const productoEnCarrito = carrito.find((producto) => producto.id === id);
-
-    if (productoEnCarrito) {
-      productoEnCarrito.cantidad += parseInt(cantidad);
-    } else {
-      carrito.push({ id, nombre, precio, cantidad: parseInt(cantidad) });
-    }
-
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-
+  const handleAgregarAlCarrito = () => {
+    const producto = { id, nombre, precio, categoria }; // Asegúrate de incluir categoria
+    agregarAlCarrito(producto, cantidad);
     swal({
       title: "Producto agregado",
-      text: `Agregaste ${cantidad} ${nombre} al carrito.`,
+      text: `${nombre} ha sido agregado al carrito`,
       icon: "success",
       button: "OK",
     });
@@ -50,7 +42,7 @@ const Item = ({ nombre, precio, id }) => {
           style={{ width: "50px", marginLeft: "10px" }}
         />
       </div>
-      <button onClick={agregarAlCarrito}>Agregar al carrito</button>
+      <button onClick={handleAgregarAlCarrito}>Agregar al carrito</button>
       <Link to={`/detalle/${id}`}>
         <button>Ver detalle</button>
       </Link>
