@@ -21,8 +21,6 @@ const Cart = () => {
   const handleFinalizarCompra = () => {
     if (carrito.length > 0) {
       crearOrden();
-      localStorage.removeItem("carrito");
-      setCarrito([]); 
     }
   };
 

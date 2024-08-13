@@ -19,12 +19,12 @@ const NavBar = () => {
             </li>
             <li className="nav-item">
               <Link to="/productos">
-                <a className="item-text">- Productos -</a>
+               - Productos -
               </Link>
             </li>
             <li className="nav-item">
               <Link to="/contactos">
-                <a className="item-text">- Contacto -</a>
+                - Contacto -  
               </Link>
             </li>
           </ul>

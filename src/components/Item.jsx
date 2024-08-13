@@ -21,7 +21,7 @@ const Item = ({ nombre, precio, id, categoria }) => {
       title: "Producto agregado",
       text: `${nombre} ha sido agregado al carrito`,
       icon: "success",
-      button: "OK",
+      confirmButtonText: "OK",
     });
   };
 
