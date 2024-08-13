@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./Item.css";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
+import { useAppContext } from './Context/Context';
 
 const Item = ({ nombre, precio, id }) => {
   const [cantidad, setCantidad] = useState(1);

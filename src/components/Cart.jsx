@@ -2,15 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import "./Cart.css";
+import { useAppContext } from "./Context/Context";
 
 const Cart = () => {
-  const [carrito, setCarrito] = useState([]);
-
-  useEffect(() => {
-    const carritoLocalStorage =
-      JSON.parse(localStorage.getItem("carrito")) || [];
-    setCarrito(carritoLocalStorage);
-  }, []);
+  const { carrito } = useAppContext();
 
   const calcularTotal = () => {
     return carrito.reduce(

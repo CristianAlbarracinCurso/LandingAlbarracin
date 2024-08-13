@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ItemList from "./ItemList";
 import Loader from "./Loader";
+import { useAppContext } from "./Context/Context";
 
-const ItemListContainer = ({ productos }) => {
+const ItemListContainer = () => {
+  const { cargarData, productos } = useAppContext();
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todas");
+
+  useEffect(() => {
+    cargarData();
+  }, []);
 
   const categorias = [
     "Todas",
@@ -24,7 +30,7 @@ const ItemListContainer = ({ productos }) => {
   return (
     <>
       {productos.length === 0 ? (
-        <Loader></Loader>
+        <Loader />
       ) : (
         <>
           <h4 style={{ padding: "2rem" }}>
@@ -33,7 +39,7 @@ const ItemListContainer = ({ productos }) => {
 
           <div>
             <label htmlFor="categoria" style={{ padding: "2rem" }}>
-              <h5>Seleccionar categoría: </h5>{" "}
+              <h5>Seleccionar categoría: </h5>
             </label>
             <select
               id="categoria"
