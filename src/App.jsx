@@ -8,7 +8,7 @@ import ItemDetail from "./components/ItemDetail";
 import HomeMain from "./components/HomeMain";
 import Cart from "./components/Cart";
 import { ContextProvider } from "./components/Context/Context";
-import Footer from "./components/SiteFooter"
+import Footer from "./components/SiteFooter";
 
 function App() {
   return (
@@ -23,14 +23,10 @@ function App() {
           <Route path="/detalle/:id" element={<ItemDetail />} />
 
           <Route path="*" element={<NotFound />} />
-          
         </Routes>
-        
       </BrowserRouter>
-      <Footer/>
+      <Footer />
     </ContextProvider>
-   
-
   );
 }
 

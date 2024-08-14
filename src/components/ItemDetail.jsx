@@ -5,9 +5,10 @@ import { useAppContext } from './Context/Context';
 
 const ItemDetail = () => {
   const { id } = useParams();
-  const { productos } = useAppContext(); // Usar productos desde el contexto
+  // Usar productos desde el context
+  const { productos } = useAppContext(); 
+  
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
-
   useEffect(() => {
     if (productos && id) {
       const findProduct = productos.find((el) => el.id === id);

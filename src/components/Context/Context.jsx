@@ -71,9 +71,29 @@ export const ContextProvider = (props) => {
     });
   }
 
+  // Funcion para eliminar los productos antes de comprar
+  function eliminarDelCarrito(productoId) {
+    const carritoActualizado = [...carrito];
+    const productoEnCarrito = carritoActualizado.find(
+      (p) => p.id === productoId
+    );
+
+    if (productoEnCarrito) {
+      productoEnCarrito.cantidad -= 1;
+      if (productoEnCarrito.cantidad === 0) {
+        // Eliminar el producto del carrito si la cantidad llega a 0
+        const index = carritoActualizado.indexOf(productoEnCarrito);
+        carritoActualizado.splice(index, 1);
+      }
+      setCarrito(carritoActualizado);
+      // Actualizar localStorage
+      localStorage.setItem("carrito", JSON.stringify(carritoActualizado));
+    }
+  }
+
   // Funcion de crear orden
   function crearOrden() {
-     // modal para obtener los datos del comprador
+    // modal para obtener los datos del comprador
     Swal.fire({
       title: "Información de contacto",
       html: `
@@ -157,6 +177,7 @@ export const ContextProvider = (props) => {
         cargarData,
         agregarAlCarrito,
         crearOrden,
+        eliminarDelCarrito,
       }}
     >
       {props.children}

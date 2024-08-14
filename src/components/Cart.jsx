@@ -4,13 +4,18 @@ import "./Cart.css";
 import { useAppContext } from "./Context/Context";
 
 const Cart = () => {
-  const { carrito, setCarrito, crearOrden } = useAppContext();
+  // Traer funciones desde el context
+  const { carrito, setCarrito, crearOrden, eliminarDelCarrito } =
+    useAppContext();
 
+  // Traer los productos desde el localStorage, persistencia de datos
   useEffect(() => {
-    const carritoLocalStorage = JSON.parse(localStorage.getItem("carrito")) || [];
-    setCarrito(carritoLocalStorage); // Usar setCarrito desde Context
+    const carritoLocalStorage =
+      JSON.parse(localStorage.getItem("carrito")) || [];
+    setCarrito(carritoLocalStorage);
   }, [setCarrito]);
 
+  // Calcular el precio total del carrito
   const calcularTotal = () => {
     return carrito.reduce(
       (total, producto) => total + producto.precio * producto.cantidad,
@@ -18,6 +23,7 @@ const Cart = () => {
     );
   };
 
+  // Llama a la creación de la orden del context
   const handleFinalizarCompra = () => {
     if (carrito.length > 0) {
       crearOrden();
@@ -38,6 +44,9 @@ const Cart = () => {
                 <p>Cantidad: {producto.cantidad}</p>
                 <p>Precio unitario: ${producto.precio}</p>
                 <p>Total: ${producto.precio * producto.cantidad}</p>
+                <button onClick={() => eliminarDelCarrito(producto.id)}>
+                  -1
+                </button>
               </li>
             ))}
           </ul>

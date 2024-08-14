@@ -18,14 +18,10 @@ const NavBar = () => {
               <Link to="/">- Home -</Link>
             </li>
             <li className="nav-item">
-              <Link to="/productos">
-               - Productos -
-              </Link>
+              <Link to="/productos">- Productos -</Link>
             </li>
             <li className="nav-item">
-              <Link to="/contactos">
-                - Contacto -  
-              </Link>
+              <Link to="/contactos">- Contacto -</Link>
             </li>
           </ul>
         </div>

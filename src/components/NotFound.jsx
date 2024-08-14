@@ -3,11 +3,11 @@ import "./NotFound.css";
 import { Link } from "react-router-dom";
 
 const NotFound = () => {
-  
   return (
-    <div className="coontainerNotF"> 
-      <div><img src={img404} className="imgNotF"/>
-        </div>
+    <div className="coontainerNotF">
+      <div>
+        <img src={img404} className="imgNotF" />
+      </div>
       <Link to="../">
         <button>Escapar</button>
       </Link>
