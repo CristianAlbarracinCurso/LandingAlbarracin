@@ -2,15 +2,20 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { addDoc, collection, getDocs, getFirestore } from "firebase/firestore";
 import { firebaseConfig } from "../Config/firebaseConfig";
-import Swal from 'sweetalert2';
-import validator from 'validator'; // Importar validator
+// Importar sweetalert2 para modal mejorado
+import Swal from "sweetalert2";
+// Importar validator para validaciones de los campos del modal de final de orden
+import validator from "validator";
 
+//inicializar firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// Definir colecciones
 const productsCollection = collection(db, "productos");
 const ordersCollection = collection(db, "ordenes");
 
+// Crear contexto
 const AppContext = createContext();
 
 export const useAppContext = () => useContext(AppContext);
@@ -19,17 +24,19 @@ export const ContextProvider = (props) => {
   const [productos, setProductos] = useState([]);
   const [carrito, setCarrito] = useState([]);
 
-  // Cargar productos desde Firestore
+  // Load de productos desde Firestore
   useEffect(() => {
     cargarData();
   }, []);
 
   // Cargar el carrito desde localStorage
   useEffect(() => {
-    const carritoLocalStorage = JSON.parse(localStorage.getItem("carrito")) || [];
+    const carritoLocalStorage =
+      JSON.parse(localStorage.getItem("carrito")) || [];
     setCarrito(carritoLocalStorage);
   }, []);
 
+  // Funcion de load de productos
   function cargarData() {
     getDocs(productsCollection)
       .then((snapshot) => {
@@ -39,21 +46,23 @@ export const ContextProvider = (props) => {
       .catch((err) => console.error(err));
   }
 
+  // Funcion de agregar al carrito
   function agregarAlCarrito(producto, cantidad) {
     const carritoActualizado = [...carrito];
-    const productoEnCarrito = carritoActualizado.find((p) => p.id === producto.id);
+    const productoEnCarrito = carritoActualizado.find(
+      (p) => p.id === producto.id
+    );
 
     if (productoEnCarrito) {
       productoEnCarrito.cantidad += cantidad;
     } else {
       carritoActualizado.push({ ...producto, cantidad });
     }
-
+    // Actualizar carrito
     setCarrito(carritoActualizado);
-
     // Actualizar localStorage
     localStorage.setItem("carrito", JSON.stringify(carritoActualizado));
-
+    // Mostrar aviso de producto agregado exitosamente
     Swal.fire({
       title: "Producto agregado",
       text: `${producto.nombre} ha sido agregado al carrito`,
@@ -62,23 +71,25 @@ export const ContextProvider = (props) => {
     });
   }
 
+  // Funcion de crear orden
   function crearOrden() {
+     // modal para obtener los datos del comprador
     Swal.fire({
-      title: 'Información de contacto',
+      title: "Información de contacto",
       html: `
         <p><b>Debe completar todos los campos</b></p>
         <input type="text" id="nombre" class="swal2-input" placeholder="Nombre">
         <input type="text" id="mail" class="swal2-input" placeholder="Email">
         <input type="text" id="telefono" class="swal2-input" placeholder="Teléfono">
       `,
-      confirmButtonText: 'Confirmar',
+      confirmButtonText: "Confirmar",
       focusConfirm: false,
       preConfirm: () => {
-        const nombre = Swal.getPopup().querySelector('#nombre').value;
-        const mail = Swal.getPopup().querySelector('#mail').value;
-        const telefono = Swal.getPopup().querySelector('#telefono').value;
-
-        // Validaciones
+        const nombre = Swal.getPopup().querySelector("#nombre").value;
+        const mail = Swal.getPopup().querySelector("#mail").value;
+        const telefono = Swal.getPopup().querySelector("#telefono").value;
+        // Validaciones previas a la creacion de la orden
+        //falta mejorar la validaación del telefono y nombre
         if (!nombre || !mail || !telefono) {
           Swal.showValidationMessage(`Todos los campos son requeridos`);
           return false;
@@ -110,27 +121,27 @@ export const ContextProvider = (props) => {
               setCarrito([]);
               localStorage.removeItem("carrito");
               Swal.fire({
-                title: 'Compra realizada con éxito',
+                title: "Compra realizada con éxito",
                 html: `Gracias por tu compra, su código de orden es: <b>${response.id}</b>`,
-                icon: 'success',
-                confirmButtonText: 'OK'
+                icon: "success",
+                confirmButtonText: "OK",
               });
             })
             .catch((err) => {
               Swal.fire({
-                title: 'Error',
-                text: 'Algo falló, intente más tarde',
-                icon: 'error',
-                confirmButtonText: 'OK'
+                title: "Error",
+                text: "Algo falló, intente más tarde",
+                icon: "error",
+                confirmButtonText: "OK",
               });
               console.error(err);
             });
         } else {
           Swal.fire({
-            title: 'Error',
-            text: 'Tu carrito está vacío!',
-            icon: 'error',
-            confirmButtonText: 'OK'
+            title: "Error",
+            text: "Tu carrito está vacío!",
+            icon: "error",
+            confirmButtonText: "OK",
           });
         }
       }

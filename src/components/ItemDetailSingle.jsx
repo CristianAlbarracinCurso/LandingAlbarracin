@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { useAppContext } from './Context/Context';
 
 const ItemDetailSingle = ({ nombre, precio, id, descripcion, categoria }) => {
-  const { agregarAlCarrito } = useAppContext(); // Usar función del contexto para agregar al carrito
+  // Usar función del contexto para agregar al carrito
+  const { agregarAlCarrito } = useAppContext(); 
   const url = `../img/${id}.png`;
 
   const handleAgregarAlCarrito = () => {
-    const producto = { id, nombre, precio, categoria }; // Crear objeto de producto
-    agregarAlCarrito(producto, 1); // Agregar 1 unidad del producto al carrito
+    // Crear objeto de producto y agregar 1 unidad al carrito
+    const producto = { id, nombre, precio, categoria }; 
+    agregarAlCarrito(producto, 1); // 
   };
 
   return (

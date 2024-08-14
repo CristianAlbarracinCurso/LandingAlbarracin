@@ -1,5 +1,5 @@
 import "./App.css";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/Navbar/NavBar";
 import ItemListContainer from "./components/ItemListContainer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NotFound from "./components/NotFound";
@@ -8,6 +8,7 @@ import ItemDetail from "./components/ItemDetail";
 import HomeMain from "./components/HomeMain";
 import Cart from "./components/Cart";
 import { ContextProvider } from "./components/Context/Context";
+import Footer from "./components/SiteFooter"
 
 function App() {
   return (
@@ -22,9 +23,14 @@ function App() {
           <Route path="/detalle/:id" element={<ItemDetail />} />
 
           <Route path="*" element={<NotFound />} />
+          
         </Routes>
+        
       </BrowserRouter>
+      <Footer/>
     </ContextProvider>
+   
+
   );
 }
 

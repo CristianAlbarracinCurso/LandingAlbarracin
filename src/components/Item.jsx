@@ -1,8 +1,7 @@
 import { useState } from "react";
 import "./Item.css";
 import { Link } from "react-router-dom";
-import Swal from 'sweetalert2'
-import { useAppContext } from './Context/Context';
+import { useAppContext } from "./Context/Context";
 
 const Item = ({ nombre, precio, id, categoria }) => {
   const [cantidad, setCantidad] = useState(1);
@@ -17,12 +16,6 @@ const Item = ({ nombre, precio, id, categoria }) => {
   const handleAgregarAlCarrito = () => {
     const producto = { id, nombre, precio, categoria }; // Asegúrate de incluir categoria
     agregarAlCarrito(producto, cantidad);
-    Swal.fire({
-      title: "Producto agregado",
-      text: `${nombre} ha sido agregado al carrito`,
-      icon: "success",
-      confirmButtonText: "OK",
-    });
   };
 
   return (

@@ -1,7 +1,7 @@
-import logoCarrito from "../assets/logoCarrito2.png";
+import logoCarrito from "../../assets/logoCarrito2.png";
 import "./CartWidget.css";
 import React, { useEffect, useState } from "react";
-import { useAppContext } from './Context/Context';
+import { useAppContext } from "../Context/Context";
 
 const CartWidget = () => {
   const { carrito } = useAppContext(); // Obtener el carrito desde el contexto

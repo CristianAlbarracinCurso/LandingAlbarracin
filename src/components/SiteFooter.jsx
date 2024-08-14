@@ -1,11 +1,9 @@
+import "./SiteFooter.css"
 const SiteFooter = () => {
   return (
     <>
-      <footer className="mx-auto p-2" style={{ width: "330px" }}>
-        <p className="text-center">
-          {" "}
-          <small>© 2024 todos los derechos reservados.</small>
-        </p>
+      <footer className="bg-dark">
+        <div className="content">© 2024 todos los derechos reservados.</div> 
       </footer>
     </>
   );

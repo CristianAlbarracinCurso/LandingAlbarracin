@@ -32,19 +32,16 @@ const Contactos = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handlePhotoChange = (e) => {
-    setFormData({ ...formData, photo: e.target.files[0] });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form data submitted:", formData);
   };
 
   return (
-    <div className="form-container">
+   <div  className="container" >
+   <div className="form-container">
       <form onSubmit={handleSubmit}>
-        <h2>Datos de Acceso</h2>
+        <h2>Datos de Contacto</h2>
         <div>
           <label>Email:</label>
           <input
@@ -55,27 +52,6 @@ const Contactos = () => {
             required
           />
         </div>
-        <div>
-          <label>Clave:</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Confirmar Clave:</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <h2>Datos Personales</h2>
         <div>
           <label>Nombre:</label>
           <input
@@ -112,18 +88,20 @@ const Contactos = () => {
             required
           />
         </div>
-        <div>
-          <label>Foto:</label>
-          <input
-            type="file"
-            name="photo"
-            accept="image/*"
-            onChange={handlePhotoChange}
+        <div > 
+          <label>Mensaje:</label>
+          <textarea
+          className="form-control"
+            type="text"
+            name="msj"
+            rows="6"
+            onChange={handleChange}
             required
           />
         </div>
         <button type="submit">Enviar</button>
       </form>
+    </div>
     </div>
   );
 };
